@@ -12,17 +12,103 @@ const pool = new Pool({
 //Get all the movies function
 const getMovies = async (req, res) => {
     try {
-        //Making a query to DB
+        //Making the SELECT query
         const response = await pool.query('SELECT * FROM movies')
-        res.json(response.rows)
-        console.log(response.rows)
+
+        //Response
+        res.status(200).json(response.rows)
         
     } catch (error) {
         res.status(500).json({message: error.message})
     }
     
 }
+
+//Get Movie by ID
+const getMovieById =  async (req, res) => {
+    //Getting the id
+    const id = req.params.id
+
+    try {
+        //Making the SELECT query
+        const response = await pool.query('SELECT * FROM movies WHERE id = $1', [id])
+
+        //Response
+        res.status(200).json(response.rows)
+
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+//Creating a new movie register
+const postMovie = async (req,res) =>{
+    //Structuring of the body
+    const { title, genre, release_date } = req.body
+
+    try {
+        //Insert into postgreSQL table
+        const response =  await pool.query('INSERT INTO movies (title, genre, release_date) VALUES($1, $2, $3)', [title, genre, release_date])
+        
+        //Response
+        res.status(201).json({
+            message: 'Movie Succesfully Added',
+            body: {
+                movie: {title, genre, release_date}
+            }
+        }) 
+
+    } catch (error) {
+       res.status(500).json({message: error.message}) 
+    }
+}
+
+//Updating a movie
+const updateMovie =  async (req, res) => {
+    
+    //Setting the values
+    const id = req.params.id
+    const { title, genre, release_date} = req.body
+
+    try {
+        //Making the UPDATE query
+        const response = await pool.query('UPDATE movies SET title = $1, genre = $2, release_date = $3 WHERE id = $4', [title, genre, release_date, id])
+
+        //Response 
+        res.status(200).json({
+            message: 'Movie Succesfully Updated',
+            body: {
+                movie: {title, genre, release_date}
+            }
+        }) 
+
+    } catch (error) {
+        res.status(400).json({message:  error.message})
+    }
+}
+
+//Deleting a movie register
+const deleteMovie = async (req, res) => {
+    //Getting the id
+    const id = req.params.id
+
+    try {
+        //Making the DELETE query
+        const response = await pool.query('DELETE FROM movies WHERE id = $1', [id])
+
+        //Response
+        res.status(200).json('User with id = '+ id+' succesfully deleted')
+
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 //Exporting the functions
 module.exports =  {
-    getMovies
+    getMovies,
+    getMovieById,
+    postMovie,
+    updateMovie,
+    deleteMovie    
 }

@@ -1,0 +1,36 @@
+//Get all movies
+GET http://localhost:3000/movies
+
+###
+
+//Get one movie by id
+GET http://localhost:3000/movies/4
+
+###
+
+//Creating a movie register
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "The Matrix",
+    "genre": "Sci-Fi",
+    "release_date": "1999-05-21"
+}
+
+###
+
+//Updating a movie register
+PATCH http://localhost:3000/movies/4
+Content-Type: application/json
+
+{
+    "title": "The TEST",
+    "genre": "Sci-Fi",
+    "release_date": "1999-05-21"
+}
+
+###
+
+//Deleting a movie register
+DELETE http://localhost:3000/movies/15
