@@ -15,7 +15,7 @@ router.get('/movies/:id', getMovieById)
 router.post('/movies',  postMovie)
 
 //Updatind a movie register
-router.put('/movies/:id', updateMovie)
+router.patch('/movies/:id', updateMovie)
 
 //Deleting a movie register
 router.delete('/movies/:id', deleteMovie)

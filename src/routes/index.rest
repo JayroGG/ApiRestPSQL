@@ -33,4 +33,4 @@ Content-Type: application/json
 ###
 
 //Deleting a movie register
-DELETE http://localhost:3000/movies/15
+DELETE http://localhost:3000/movies/16
