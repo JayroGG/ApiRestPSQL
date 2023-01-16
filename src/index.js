@@ -15,4 +15,4 @@ app.use('/', routes)
 
 const port = process.env.APP_PORT || 3000 
 //API Listening
-app.listen(port, () => console.log('Server on port 3000'))
+app.listen(port, () => console.log(`Server on Port: ${port}`))
