@@ -2,9 +2,13 @@ require('dotenv').config()
 
 //Requiring the modules
 const express =  require('express')
+const cors = require('cors')
 const app = express()
 
+//Accepted origin list of clients
+const whiteList = ['http://localhost:3000']
 //Middlewares
+app.use(cors({origin: whiteList }))
 app.use(express.json())
     //No nested data
 app.use(express.urlencoded({extended: false}))
