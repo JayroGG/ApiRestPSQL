@@ -16,28 +16,28 @@ const getMovies = async (req, res) => {
         const response = await pool.query('SELECT * FROM movies')
 
         //Response
-        res.status(200).json(response.rows)
+        res.status(200).json({data: response.rows})
         
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({data: [], message: error.message})
     }
     
 }
 
-//Get Movie by ID
-const getMovieById =  async (req, res) => {
-    //Getting the id
-    const id = req.params.id
+//Get Movie by Name
+const getMovieByTitle =  async (req, res) => {
+    //Getting the title
+    const title = req.params.title
 
     try {
         //Making the SELECT query
-        const response = await pool.query('SELECT * FROM movies WHERE id = $1', [id])
+        const response = await pool.query('SELECT * FROM movies WHERE title = $1', [title])
 
         //Response
-        res.status(200).json(response.rows)
+        res.status(200).json({data: response.rows})
 
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({data: [], message: error.message})
     }
 }
 
@@ -94,21 +94,30 @@ const deleteMovie = async (req, res) => {
 
     try {
         //Making the DELETE query
-        const response = await pool.query('DELETE FROM movies WHERE id = $1', [id])
+        const response = await pool.query('DELETE FROM movies WHERE title = $1', [id])
 
         //Response
-        res.status(200).json('User with id = '+ id+' succesfully deleted')
+        res.status(200).json('Movie with id = '+ id+' succesfully deleted')
 
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 }
 
+//Not Found 404
+const notFound = async (req, res) =>{
+    try {
+        res.status(404).json({data: [], message: "Whaat?"})
+    } catch (error) {
+        res.status(500).json({data: [], message: error.message})
+    }
+}
 //Exporting the functions
 module.exports =  {
     getMovies,
-    getMovieById,
+    getMovieByTitle,
     postMovie,
     updateMovie,
-    deleteMovie    
+    deleteMovie,
+    notFound  
 }

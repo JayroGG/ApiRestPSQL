@@ -3,13 +3,13 @@ const { Router } = require('express')
 const router =  Router()
 
 //Requiring the controller functions
-const { getMovies, getMovieById, postMovie, updateMovie, deleteMovie } = require('../controllers/index.controller')
+const { getMovies, getMovieByTitle, postMovie, updateMovie, deleteMovie, notFound } = require('../controllers/index.controller')
 
 //Getting all movies
 router.get('/movies', getMovies)
 
 //Gettin one Movie
-router.get('/movies/:id', getMovieById)
+router.get('/movies/search/:title', getMovieByTitle)
 
 //Creating a movie register
 router.post('/movies',  postMovie)
@@ -20,7 +20,8 @@ router.patch('/movies/:id', updateMovie)
 //Deleting a movie register
 router.delete('/movies/:id', deleteMovie)
 
-
+//Default 404
+router.get('*', notFound)
 
 //Exporting
 module.exports = router
