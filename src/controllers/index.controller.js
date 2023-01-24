@@ -28,11 +28,10 @@ const getMovies = async (req, res) => {
 const getMovieByTitle =  async (req, res) => {
     //Getting the title
     const title = req.params.title
-
+    const query ='SELECT * FROM movies WHERE title like $1'
     try {
         //Making the SELECT query
-        const response = await pool.query('SELECT * FROM movies WHERE title = $1', [title])
-
+        const response = await pool.query(query, [title])
         //Response
         res.status(200).json({data: response.rows})
 
