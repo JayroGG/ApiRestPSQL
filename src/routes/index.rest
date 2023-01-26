@@ -9,13 +9,13 @@ GET http://localhost:3000/movies/4
 ###
 
 //Creating a movie register
-POST http://localhost:3000/movies
+POST http://localhost:4000/movies
 Content-Type: application/json
 
 {
-    "title": "The Matrix",
-    "genre": "Sci-Fi",
-    "release_date": "1999-05-21"
+    "title": "Kung Fu Panda",
+    "genre": "Adventure",
+    "release_date": "2008-06-20"
 }
 
 ###

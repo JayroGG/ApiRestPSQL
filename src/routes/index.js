@@ -9,7 +9,7 @@ const { getMovies, getMovieByTitle, postMovie, updateMovie, deleteMovie, notFoun
 router.get('/movies', getMovies)
 
 //Gettin one Movie
-router.get('/movies/search/:title', getMovieByTitle)
+router.get('/movies/:title', getMovieByTitle)
 
 //Creating a movie register
 router.post('/movies',  postMovie)
