@@ -6,7 +6,7 @@ const cors = require('cors')
 const app = express()
 
 //Accepted origin list of clients
-const whiteList = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://192.168.0.17:3000']
+const whiteList = ['http://localhost:3000']
 
 //Middlewares
 app.use(cors({origin: whiteList }))
