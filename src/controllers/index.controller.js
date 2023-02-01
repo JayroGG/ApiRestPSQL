@@ -27,7 +27,7 @@ const getMovies = async (req, res) => {
 //Get Movie by Name
 const getMovieByTitle =  async (req, res) => {
     //Getting the title
-    const title = req.params.title
+    const title = '%'+req.params.title+'%'
     const query ='SELECT * FROM movies WHERE title like $1'
     try {
         //Making the SELECT query
