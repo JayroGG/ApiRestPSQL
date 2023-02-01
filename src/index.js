@@ -6,10 +6,10 @@ const cors = require('cors')
 const app = express()
 
 //Accepted origin list of clients
-const whiteList = ['http://localhost:3000']
+//const whiteList = ['http://localhost:3000']
 
 //Middlewares
-app.use(cors({origin: whiteList }))
+app.use(cors())
 app.use(express.json())
 
 //No nested data
