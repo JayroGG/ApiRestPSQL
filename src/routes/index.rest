@@ -1,10 +1,10 @@
 //Get all movies
-GET http://localhost:3000/movies
+GET http://localhost:4000/movies
 
 ###
 
 //Get one movie by id
-GET http://localhost:3000/movies/4
+GET http://localhost:4000/movies/Avatar
 
 ###
 
@@ -21,11 +21,11 @@ Content-Type: application/json
 ###
 
 //Updating a movie register
-PATCH http://localhost:3000/movies/4
+PATCH http://localhost:4000/movies/4
 Content-Type: application/json
 
 {
-    "title": "The TEST",
+    "title": "The TEST22",
     "genre": "Sci-Fi",
     "release_date": "1999-05-21"
 }
@@ -33,10 +33,10 @@ Content-Type: application/json
 ###
 
 //Deleting a movie register
-DELETE http://localhost:3000/movies/16
+DELETE http://localhost:4000/movies/23
 
 ###
 
 //Verifiyin the 404 message
 
-GET http://localhost:3000/movies/admsa
+GET http://localhost:4000/movies/admsa

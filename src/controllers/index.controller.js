@@ -1,5 +1,5 @@
 //DB Conection
-const { Pool } =  require('pg')
+const { Pool } = require('pg')
 
 const pool = new Pool({
     host: process.env.HOST,
@@ -16,58 +16,58 @@ const getMovies = async (req, res) => {
         const response = await pool.query('SELECT * FROM movies')
 
         //Response
-        res.status(200).json({data: response.rows})
-        
+        res.status(200).json({ data: response.rows })
+
     } catch (error) {
-        res.status(500).json({data: [], message: error.message})
+        res.status(500).json({ data: [], message: error.message })
     }
-    
+
 }
 
 //Get Movie by Name
-const getMovieByTitle =  async (req, res) => {
+const getMovieByTitle = async (req, res) => {
     //Getting the title
-    const title = '%'+req.params.title+'%'
-    const query ='SELECT * FROM movies WHERE title like $1'
+    const title = `%${req.params.title}%`
+    const query = 'SELECT * FROM movies WHERE title like $1'
     try {
         //Making the SELECT query
         const response = await pool.query(query, [title])
         //Response
-        res.status(200).json({data: response.rows})
+        res.status(200).json({ data: response.rows })
 
     } catch (error) {
-        res.status(500).json({data: [], message: error.message})
+        res.status(500).json({ data: [], message: error.message })
     }
 }
 
 //Creating a new movie register
-const postMovie = async (req,res) =>{
+const postMovie = async (req, res) => {
     //Structuring of the body
     const { title, genre, release_date } = req.body
 
     try {
         //Insert into postgreSQL table
-        const response =  await pool.query('INSERT INTO movies (title, genre, release_date) VALUES($1, $2, $3)', [title, genre, release_date])
-        
+        const response = await pool.query('INSERT INTO movies (title, genre, release_date) VALUES($1, $2, $3)', [title, genre, release_date])
+
         //Response
         res.status(201).json({
             message: 'Movie Succesfully Added',
             body: {
-                movie: {title, genre, release_date}
+                movie: { title, genre, release_date }
             }
-        }) 
+        })
 
     } catch (error) {
-       res.status(500).json({message: error.message}) 
+        res.status(500).json({ message: error.message })
     }
 }
 
 //Updating a movie
-const updateMovie =  async (req, res) => {
-    
+const updateMovie = async (req, res) => {
+
     //Setting the values
     const id = req.params.id
-    const { title, genre, release_date} = req.body
+    const { title, genre, release_date } = req.body
 
     try {
         //Making the UPDATE query
@@ -77,12 +77,12 @@ const updateMovie =  async (req, res) => {
         res.status(200).json({
             message: 'Movie Succesfully Updated',
             body: {
-                movie: {title, genre, release_date}
+                movie: { title, genre, release_date }
             }
-        }) 
+        })
 
     } catch (error) {
-        res.status(400).json({message:  error.message})
+        res.status(400).json({ message: error.message })
     }
 }
 
@@ -93,30 +93,30 @@ const deleteMovie = async (req, res) => {
 
     try {
         //Making the DELETE query
-        const response = await pool.query('DELETE FROM movies WHERE title = $1', [id])
+        const response = await pool.query('DELETE FROM movies WHERE id = $1', [id])
 
         //Response
-        res.status(200).json('Movie with id = '+ id+' succesfully deleted')
+        res.status(200).json(`Movie with id = ${id} succesfully deleted`)
 
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 }
 
 //Not Found 404
-const notFound = async (req, res) =>{
+const notFound = async (req, res) => {
     try {
-        res.status(404).json({data: [], message: "Whaat?"})
+        res.status(404).json({ data: [], message: "Whaat?" })
     } catch (error) {
-        res.status(500).json({data: [], message: error.message})
+        res.status(500).json({ data: [], message: error.message })
     }
 }
 //Exporting the functions
-module.exports =  {
+module.exports = {
     getMovies,
     getMovieByTitle,
     postMovie,
     updateMovie,
     deleteMovie,
-    notFound  
+    notFound
 }
