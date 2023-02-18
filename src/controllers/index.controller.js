@@ -103,6 +103,15 @@ const notFound = async (req, res) => {
         res.status(500).json({ data: [], message: error.message })
     }
 }
+
+//Heavy controller
+const heavyLogic = async (req, res) => {
+    const countWorker = new Worker('./src/controllers/workers/countWorker.js')
+    countWorker.on('message', ({ total, message }) => {
+        res.status(200).json({ data: [total], message: message })
+    })
+}
+
 //Exporting the functions
 module.exports = {
     getMovies,
@@ -110,5 +119,6 @@ module.exports = {
     postMovie,
     updateMovie,
     deleteMovie,
-    notFound
+    notFound,
+    heavyLogic
 }
