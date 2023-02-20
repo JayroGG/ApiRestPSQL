@@ -4,19 +4,31 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const compression = require('compression')
+const whiteList = [process.env.WHITE_LIST] || ['http://localhost:3000']
 
-//Accepted origin list of clients
-const whiteList = ['http://localhost:3000']
+//Filter compression
+const filterCompression = (req, res) => {
+  if(req.headers['x-no-compression']){
+    return false
+  }
+  return compression.filter(req, res)
+}
 
 //Middlewares
-app.use(cors({ 
+app.use(cors({ // Cross Origin
   origin: whiteList,
   allowedHeaders: ['Content-Type'],
 }))
-app.use(express.json())
 
-//No nested data
-app.use(express.urlencoded({ extended: false }))
+app.use(compression({  // Compression above 10 KB
+  level: 6,
+  threshold: 10 * 1000,
+  filter: filterCompression 
+}))
+
+app.use(express.json()) //encoding json
+app.use(express.urlencoded({ extended: false })) //No nested data
 
 //Setting the enpoint routes
 const routes = require('./routes/index')
