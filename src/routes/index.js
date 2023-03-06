@@ -3,13 +3,16 @@ const { Router } = require('express')
 const router = Router()
 
 //Requiring the controller functions
-const { getMovies, getMovieByTitle, postMovie, updateMovie, deleteMovie, notFound, heavyLogic } = require('../controllers/index.controller')
+const { getMovies, getMovieByTitle, postMovie, updateMovie, deleteMovie, notFound, heavyLogic, getMovieById } = require('../controllers/index.controller')
 
 //Getting all movies
 router.get('/movies', getMovies)
 
-//Gettin one Movie
+//Gettin Movis that match the name
 router.get('/movies/:title', getMovieByTitle)
+
+//Gettin one Movie by it's ID
+router.get('/movies/byId/:id', getMovieById)
 
 //Creating a movie register
 router.post('/movies', postMovie)

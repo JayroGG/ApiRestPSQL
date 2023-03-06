@@ -32,6 +32,22 @@ const getMovieByTitle = async (req, res) => {
     }
 }
 
+//Get Movie by id
+const getMovieById = async (req, res) => {
+    //Getting the id
+    const id = req.params.id
+    const query = 'SELECT * FROM movies WHERE id = $1'
+    try {
+        //Making the SELECT query
+        const response = await pool.query(query, [id])
+        //Response
+        res.status(200).json({ data: response.rows })
+
+    } catch (error) {
+        res.status(500).json({ data: [], message: error.message })
+    }
+}
+
 //Creating a new movie register
 const postMovie = async (req, res) => {
     //Structuring of the body
@@ -116,6 +132,7 @@ const heavyLogic = async (req, res) => {
 module.exports = {
     getMovies,
     getMovieByTitle,
+    getMovieById,
     postMovie,
     updateMovie,
     deleteMovie,
