@@ -3,9 +3,12 @@ const pool = require('../db/dbConection.js')
 
 //Get all the movies function
 const getMovies = async (req, res) => {
+    const params = new URLSearchParams(`http://localhost:3000${req.url}`)
+    const limit = params.get('limit')
+    const offset = params.get('offset')
     try {
         //Making the SELECT query
-        const response = await pool.query('SELECT * FROM movies')
+        const response = await pool.query('SELECT * FROM movies limit $1 offset $2', [limit, offset])
 
         //Response
         res.status(200).json({ data: response.rows })

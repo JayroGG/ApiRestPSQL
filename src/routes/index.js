@@ -8,7 +8,7 @@ const { getMovies, getMovieByTitle, postMovie, updateMovie, deleteMovie, notFoun
 //Getting all movies
 router.get('/movies', getMovies)
 
-//Gettin Movis that match the name
+//Gettin Movies that match the name
 router.get('/movies/:title', getMovieByTitle)
 
 //Gettin one Movie by it's ID
