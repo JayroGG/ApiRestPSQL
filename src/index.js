@@ -5,7 +5,8 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const compression = require('compression')
-const whiteList = [process.env.ORIGIN] || ['http://192.168.68.121:3000']
+const origins = JSON.parse(process.env.ORIGIN)
+const whiteList = origins || ['http://192.168.68.121:3000', 'http://localhost:3000']
 
 // Filter compression
 const filterCompression = (req, res) => {
@@ -35,5 +36,5 @@ const routes = require('./routes/index')
 app.use('/', routes)
 
 // API Listening
-const port = process.env.APP_PORT || 3000
-app.listen(port, () => console.log(`Server on Port: ${port}`))
+const port = process.env.APP_PORT || 4000
+app.listen(port, () => console.log(`Server on Port: ${port}, Allowed Origins: ${origins}`))
