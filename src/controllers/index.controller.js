@@ -3,7 +3,7 @@ const pool = require('../db/dbConection.js')
 
 // Get all the movies function
 const getMovies = async (req, res) => {
-    const params = new URLSearchParams(`http://localhost:3000${req.url}`)
+    const params = new URLSearchParams(req.url)
     const limit = params.get('limit')
     const offset = params.get('offset')
     try {

@@ -5,7 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const compression = require('compression')
-const whiteList = [process.env.ORIGIN] || ['http://localhost:3000']
+const whiteList = [process.env.ORIGIN] || ['http://192.168.68.121:3000']
 
 // Filter compression
 const filterCompression = (req, res) => {
