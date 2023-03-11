@@ -7,10 +7,17 @@ const getMovies = async (req, res) => {
     const limit = params.get('limit')
     const offset = params.get('offset')
     try {
+        // Counting the total number of movies in the database
+        const count = await pool.query('SELECT count(*) FROM movies')
+        const totalMovies = parseInt(count.rows[0].count)
+
+        // Calculating the maximum number of pages
+        const maxPages = Math.ceil(totalMovies / limit)
+
         // Making the SELECT query
         const response = await pool.query('SELECT * FROM movies limit $1 offset $2', [limit, offset])
         // Response
-        res.status(200).json({ data: response.rows })
+        res.status(200).json({ data: response.rows, pages: maxPages })
     } catch (error) {
         res.status(500).json({ data: [], message: error.message })
     }
@@ -26,7 +33,7 @@ const getMovieByTitle = async (req, res) => {
         const response = await pool.query(query, [title])
         // Response
         if (response.rows.length === 0) {
-            res.status(404).json({ data: [], message: 'Movie not found'})
+            res.status(404).json({ data: [], message: 'Movie not found' })
         } else {
             res.status(200).json({ data: response.rows })
         }
@@ -54,7 +61,7 @@ const getMovieById = async (req, res) => {
 const createMovie = async (req, res) => {
     // Destructuring of the body
     const { title, genre, release_date } = req.body
-     try {
+    try {
         // Insert into postgreSQL table
         const response = await pool.query('INSERT INTO movies (title, genre, release_date) VALUES($1, $2, $3)', [title, genre, release_date])
         // Response
